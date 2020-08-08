@@ -5,6 +5,8 @@ $DBpass = "1q2w3e4r";
 $DBname = "dbpibk";
 $DBcon  = new MySQLi($DBhost,$DBuser,$DBpass,$DBname);
 
+$backup_folder = __DIR__.'/backup-dokap/';
+
 if ($DBcon->connect_errno) {
   die("ERROR : -> ".$DBcon->connect_error);
 }
@@ -60,17 +62,17 @@ while($row= $query->fetch_array()){
     }else{
 
       $fold_satu=create_folder_satu($namafile);
-    	$pathsatu='D://DOKAP/'.$fold_satu;
+    	$pathsatu= $backup_folder . $fold_satu;
     	if (!file_exists($pathsatu)) {
         	mkdir($pathsatu, 0755, true);
     	}
     	$fold_dua=create_folder_dua($namafile);
-    	$pathdua='D://DOKAP/'.$fold_satu.'/'.$fold_dua;
+    	$pathdua= $pathsatu . '/' . $fold_dua;
     	if (!file_exists($pathdua)) {
         mkdir($pathdua, 0755, true);
     	}
     	$fold_tiga=create_folder_tiga($namafile);
-    	$pathtiga='D://DOKAP/'.$fold_satu.'/'.$fold_dua.'/'.$fold_tiga;
+    	$pathtiga=$pathdua . '/' . $fold_tiga;
     	if (!file_exists($pathtiga)) {
         mkdir($pathtiga, 0755, true);
     	}
