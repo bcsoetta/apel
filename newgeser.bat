@@ -1,0 +1,1 @@
+php -f "C:\nginx\html\gesernew.php"

@@ -1,0 +1,114 @@
+<?php
+$DBhost = "localhost";
+$DBuser = "root";
+$DBpass = "1q2w3e4r";
+$DBname = "dbpibk";
+$DBcon  = new MySQLi($DBhost,$DBuser,$DBpass,$DBname);
+
+if ($DBcon->connect_errno) {
+  die("ERROR : -> ".$DBcon->connect_error);
+}
+
+function create_folder_satu($data){
+	$pecah=explode("_",$data);
+	$datadua=$pecah[1];
+	$fold_one=substr($datadua,0,4);
+return $fold_one;
+}
+
+function create_folder_dua($data){
+	$pecah=explode("_",$data);
+	$datadua=$pecah[1];
+	$fold_two=substr($datadua,4,2);
+return $fold_two;
+}
+
+function create_folder_tiga($data){
+	$pecah=explode("_",$data);
+	$datadua=$pecah[1];
+	$fold_tri=substr($datadua,6,2);
+return $fold_tri;
+}
+
+$sql_satu="SELECT idheader,namafile,waktuupload FROM pibk_dokap ";
+$sql_satu.="WHERE waktuupload<=DATE_ADD(NOW(), INTERVAL -23 DAY) AND waktuupload>=DATE_ADD(NOW(), INTERVAL -26 DAY);";
+
+//waktuupload<=DATE_ADD(NOW(), INTERVAL -25 DAY) AND waktuupload>=DATE_ADD(NOW(), INTERVAL -30 DAY)
+
+$query	= $DBcon->query("$sql_satu");
+$i=0;
+while($row= $query->fetch_array()){
+  $pdf_files=glob("dokap/$row[namafile]");
+  $namafile=$row['namafile'];
+  $id_dokap=$row['idheader'];
+  if($pdf_files){
+    //get data header
+    $sql_dua    ="SELECT no_hawb,tgl_hawb FROM pibk_header WHERE ";
+    $sql_dua    .="idpibk_header='$id_dokap';";
+    $query_satu	= $DBcon->query("$sql_dua");
+    $data       = $query_satu->fetch_assoc();
+    $awb        = $data['no_hawb'];
+    $awbtgl     = $data['tgl_hawb'];
+    //cek data npd
+    $sql_tiga   ="SELECT count(*) AS jumlahnpd FROM npd_header WHERE ";
+    $sql_tiga   .="npd_hawb='$awb' AND npd_tgl_hawb='$awbtgl'";
+    $query_dua	= $DBcon->query("$sql_tiga");
+    $datanpd    = $query_dua->fetch_assoc();
+    $jumlahnpd  = $datanpd['jumlahnpd'];
+    if($jumlahnpd>0){
+      echo $i.". False ".$awb." ada NPD tidak didapat diarsip"."\n";
+    }else{
+
+      $fold_satu=create_folder_satu($namafile);
+    	$pathsatu='D://DOKAP/'.$fold_satu;
+    	if (!file_exists($pathsatu)) {
+        	mkdir($pathsatu, 0755, true);
+    	}
+    	$fold_dua=create_folder_dua($namafile);
+    	$pathdua='D://DOKAP/'.$fold_satu.'/'.$fold_dua;
+    	if (!file_exists($pathdua)) {
+        mkdir($pathdua, 0755, true);
+    	}
+    	$fold_tiga=create_folder_tiga($namafile);
+    	$pathtiga='D://DOKAP/'.$fold_satu.'/'.$fold_dua.'/'.$fold_tiga;
+    	if (!file_exists($pathtiga)) {
+        mkdir($pathtiga, 0755, true);
+    	}
+    	rename('dokap/'.$namafile, $pathtiga.'/'.$namafile);
+
+      $sql_arsip_header="INSERT INTO pibk_header_arsip (idpibk_header,no_mawb,";
+      $sql_arsip_header.="tgl_mawb,no_hawb,tgl_hawb,no_bc,tgl_bc,id_pjt,";
+      $sql_arsip_header.="id_importir,batch,posisi) SELECT * FROM pibk_header";
+      $sql_arsip_header.=" WHERE idpibk_header='$id_dokap';";
+      $DBcon->query("$sql_arsip_header");
+
+
+      $sql_arsip_dokap="INSERT INTO pibk_dokap_arsip(idheader,namafile,";
+      $sql_arsip_dokap.="waktuupload) SELECT * FROM pibk_dokap";
+      $sql_arsip_dokap.=" WHERE idheader='$id_dokap';";
+      $DBcon->query("$sql_arsip_dokap");
+
+
+      $sql_arsip_ctl="INSERT INTO pibk_ctl_arsip(ctl_seq_id,header_seq_id,";
+      $sql_arsip_ctl.="ctl_stat,ctl_time,user_id,flag_proses,uraian_proses)";
+      $sql_arsip_ctl.=" SELECT * FROM pibk_ctl WHERE header_seq_id='$id_dokap';";
+      $DBcon->query("$sql_arsip_ctl");
+
+      $DBcon->query("DELETE FROM pibk_dokap WHERE idheader='$id_dokap'");
+      $DBcon->query("DELETE FROM pibk_header WHERE idpibk_header='$id_dokap'");
+      $DBcon->query("DELETE FROM pibk_ctl WHERE header_seq_id='$id_dokap'");
+
+      echo $i.". True ".$awb."berhasil diarsipkan"."\n";
+    }
+
+  }
+  else{
+    echo $i.". False ".$namafile." tidak ada pada folder"."\n";
+  }
+  $i++;
+}
+
+$DBcon->close();
+
+
+?>

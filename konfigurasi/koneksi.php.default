@@ -1,0 +1,14 @@
+<?php
+
+//koneksi ke mysql server
+	$DBhost = "<db-server-ip-address>";
+  	$DBuser = "<db-user>";
+  	$DBpass = "<db-password>";
+  	$DBname = "<db-name>";
+  
+  	$DBcon = new MySQLi($DBhost,$DBuser,$DBpass,$DBname);
+    
+    if ($DBcon->connect_errno) {
+        die("ERROR : -> ".$DBcon->connect_error);
+    }
+?>

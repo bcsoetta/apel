@@ -1,0 +1,10 @@
+dokap/*
+dokapnpd/*
+backup-dokap/*
+files/*
+arsip/*
+dokaptambahan/*
+!.gitkeep
+konfigurasi/koneksi.php
+
+

@@ -1,0 +1,28 @@
+body {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #FFF;
+}
+
+.form-signin {
+  max-width: 400px;
+  padding: 10px;
+  margin: 0 auto;
+  border:#EEE thin solid; 
+  box-shadow:5px 5px 5px #DDDDDD; 
+  background:linear-gradient(#FFFFFF,#EEEEEE);
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+  margin-bottom: 10px;
+}
+
+.form-signin .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
