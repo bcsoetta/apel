@@ -75,8 +75,13 @@ while($row= $query->fetch_array()){
     	$pathtiga=$pathdua . '/' . $fold_tiga;
     	if (!file_exists($pathtiga)) {
         mkdir($pathtiga, 0755, true);
-    	}
-    	rename('dokap/'.$namafile, $pathtiga.'/'.$namafile);
+      }
+      
+      $src = 'dokap/' . $namafile;
+      $dest = $pathtiga . '/' . $namafile;
+
+      echo "moving: {$src} --> {$dest}\n";
+    	/* rename('dokap/'.$namafile, $pathtiga.'/'.$namafile);
 
       $sql_arsip_header="INSERT INTO pibk_header_arsip (idpibk_header,no_mawb,";
       $sql_arsip_header.="tgl_mawb,no_hawb,tgl_hawb,no_bc,tgl_bc,id_pjt,";
@@ -100,7 +105,7 @@ while($row= $query->fetch_array()){
       $DBcon->query("DELETE FROM pibk_header WHERE idpibk_header='$id_dokap'");
       $DBcon->query("DELETE FROM pibk_ctl WHERE header_seq_id='$id_dokap'");
 
-      echo $i.". True ".$awb."berhasil diarsipkan"."\n";
+      echo $i.". True ".$awb."berhasil diarsipkan"."\n"; */
     }
 
   }
