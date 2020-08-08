@@ -7,5 +7,6 @@ dokaptambahan/*
 !.gitkeep
 konfigurasi/koneksi.php
 tes.php
+*.log
 
 
