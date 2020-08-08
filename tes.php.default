@@ -1,8 +1,8 @@
 <?php
-$DBhost = "localhost";
-$DBuser = "root";
-$DBpass = "1q2w3e4r";
-$DBname = "dbpibk";
+$DBhost = "";
+$DBuser = "";
+$DBpass = "";
+$DBname = "";
 $DBcon  = new MySQLi($DBhost,$DBuser,$DBpass,$DBname);
 
 $backup_folder = __DIR__.'/backup-dokap/';
