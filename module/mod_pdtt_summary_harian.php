@@ -46,7 +46,7 @@
 				$tgl_akhir_sql=getdateformatymd($tgldua);
 
 		$sqlrelease="SELECT user_id,count(header_seq_id) AS jumdok ";
-				$sqlrelease.="FROM dbpibk.pibk_ctl ";
+				$sqlrelease.="FROM db_apel.pibk_ctl ";
 				$sqlrelease.="WHERE ctl_time>='$tgl_awal_sql'  ";
 				$sqlrelease.="AND ctl_time<'$tgl_akhir_sql'  ";
 				$sqlrelease.="AND ctl_stat='2'";
@@ -73,7 +73,7 @@
 		<div class="col-md-3">
 		<?php
 		$sqlmerah="SELECT user_id,count(header_seq_id) AS jumdok ";
-				$sqlmerah.="FROM dbpibk.pibk_ctl ";
+				$sqlmerah.="FROM db_apel.pibk_ctl ";
 				$sqlmerah.="WHERE ctl_time>='$tgl_awal_sql'  ";
 				$sqlmerah.="AND ctl_time<'$tgl_akhir_sql'  ";
 				$sqlmerah.="AND ctl_stat='5'";
@@ -100,7 +100,7 @@
 		<div class="col-md-3">
 		<?php
 		$sqlnotif="SELECT user_id,count(header_seq_id) AS jumdok ";
-				$sqlnotif.="FROM dbpibk.pibk_ctl ";
+				$sqlnotif.="FROM db_apel.pibk_ctl ";
 				$sqlnotif.="WHERE ctl_time>='$tgl_awal_sql'  ";
 				$sqlnotif.="AND ctl_time<'$tgl_akhir_sql'  ";
 				$sqlnotif.="AND ctl_stat='3'";
@@ -127,7 +127,7 @@
 		<div class="col-md-3">
 		<?php
 		$sqlall="SELECT user_id,count(header_seq_id) AS jumdok ";
-				$sqlall.="FROM dbpibk.pibk_ctl ";
+				$sqlall.="FROM db_apel.pibk_ctl ";
 				$sqlall.="WHERE ctl_time>='$tgl_awal_sql'  ";
 				$sqlall.="AND ctl_time<'$tgl_akhir_sql'  ";
 				$sqlall.="AND (ctl_stat='3' OR ctl_stat='5' OR ctl_stat='2') ";
@@ -157,7 +157,7 @@
 	<div class="row">
 	<?php
 		$sqlrekapall="SELECT id_pjt,ctl_stat,count(ctl_seq_id) AS jumdok ";
-		$sqlrekapall.="FROM dbpibk.pibk_ctl JOIN dbpibk.pibk_header ON idpibk_header=header_seq_id ";
+		$sqlrekapall.="FROM db_apel.pibk_ctl JOIN db_apel.pibk_header ON idpibk_header=header_seq_id ";
 		$sqlrekapall.="WHERE ctl_time>='$tgl_awal_sql'  ";
 		$sqlrekapall.="AND ctl_time<'$tgl_akhir_sql'  ";
 		$sqlrekapall.="AND (ctl_stat='3' OR ctl_stat='5' OR ctl_stat='2') AND (id_pjt='1' OR id_pjt='2' OR id_pjt='3')";
@@ -196,7 +196,7 @@
 				
 
 				$sql="SELECT user_id,ctl_stat,count(header_seq_id) AS jumdok ";
-				$sql.="FROM dbpibk.pibk_ctl ";
+				$sql.="FROM db_apel.pibk_ctl ";
 				$sql.="WHERE ctl_time>='$tgl_awal_sql'  ";
 				$sql.="AND ctl_time<'$tgl_akhir_sql'  ";
 				$sql.="AND (ctl_stat='2' OR ctl_stat='3' OR ctl_stat='5')   ";

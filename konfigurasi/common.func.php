@@ -76,7 +76,7 @@ function getstatusterakhir($id,$konek){
 
 //fungsi get uraian npd
 function geturaiannpd($id,$konek){
-	$query 	= $konek->query("SELECT * FROM dbpibk.npd_control WHERE npdc_id_header='$id' ORDER BY npdc_id DESC LIMIT 1");
+	$query 	= $konek->query("SELECT * FROM db_apel.npd_control WHERE npdc_id_header='$id' ORDER BY npdc_id DESC LIMIT 1");
 	$rowdata=$query->fetch_array();
 	$dataterakhir=$rowdata['npdc_uraian'];
 	return $dataterakhir;
