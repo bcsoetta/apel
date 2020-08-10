@@ -1,4 +1,10 @@
-<?php echo getbread($mod,$DBcon);
+<?php 
+// turn on error
+ini_set('display_errors', 1);
+ini_set('display_status_errors', 1);
+error_reporting(E_ALL);
+
+echo getbread($mod,$DBcon);
 $petugas=$_SESSION['userSession'];
 if(isset($_POST['submit']) || isset($_POST['pageNum']) || isset($_POST['nextBut']) || isset($_POST['previousBut']) || isset($_POST['nextButLast']) || isset($_POST['previousButFirst']) ){
 		$fltAwb		=$_POST['fltAwb'];
